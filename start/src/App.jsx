@@ -1,28 +1,65 @@
-import React, { useState } from 'react'
-import SearchResults from "./Components/SearchResults"
-import Layout from "./Components/Layout"
-import './Styles/Styles.scss'
+// import React, { useState } from 'react'
+// import SearchResults from "./Components/SearchResults"
+// import Layout from "./Components/Layout"
+// import './Styles/Styles.scss'
 
-function App() {
-  const [searchResultState, setSearchResultState] = useState([])
+// function App() {
+//   const [searchResultState, setSearchResultState] = useState([])
 
-  const fetchData = async (query) => {
-    try{
-      const response = await fetch(`https://openlibrary.org/search.json?title=${query}`)
-      const data = await response.json()
-      setSearchResultState(data.docs)
-    }catch (error){
-      console.error("det har skjedd en feil:", error)
-    }
+//   const fetchData = async (query) => {
+//     try{
+//       const response = await fetch(`https://openlibrary.org/search.json?title=${query}`)
+//       const data = await response.json()
+//       setSearchResultState(data.docs)
+//     }catch (error){
+//       console.error("det har skjedd en feil:", error)
+//     }
 
   
-  return (
-   <Layout>
-    <SearchResults searchResults={searchResultState} />
-   </Layout>
+//   return (
+//    <Layout>
+//     <SearchResults searchResults={searchResultState} />
+//    </Layout>
 
+//   )
+// }
+// }
+
+// export default App
+
+import React, { useState } from "react"
+import SearchResults from "./Components/SearchResults"
+import Layout from "./Components/Layout"
+import "./Styles/Styles.scss"
+
+
+
+
+function App() {
+  const [searchResultsState, setSearchResultsState] = useState([])
+
+  const fetchData = async (query) => {
+    try {
+      const response = await fetch(`https://openlibrary.org/search.json?title=${query}`)
+      const data = await response.json()
+      setSearchResultsState(data.docs)
+    } catch (error) {
+      console.error("Det har skjedd en feil:", error)
+    }
+  }
+
+ 
+
+  return (
+     
+      <Layout>
+       <SearchResults searchResults={searchResultsState} />
+       </Layout>
+     
+    
   )
-}
 }
 
 export default App
+
+

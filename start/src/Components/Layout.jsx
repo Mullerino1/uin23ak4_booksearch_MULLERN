@@ -7,6 +7,7 @@ export default function Layout ({children}){
     const [query, setQuery] = useState("James Bond")
 
 
+    // query ble inspirert av det som ble gjort til timen under rick and morty oppgavene https://github.com/toremake/UIN2024_coursebase/blob/main/Category_blogg/src/App.jsx
     const fetchData = async (query) => {
         try{
             const response = await fetch(`https://openlibrary.org/search.json?title=${query}`)
@@ -18,14 +19,15 @@ export default function Layout ({children}){
     }
 
     useEffect(() => {
-        if (query){
+        if (query) {
             fetchData(query)
         }
     }, [query])
 
     const handleSearch = () => {
-        if (searchTerm.length >= 3){
+        if (searchTerm.length >= 3) {
             setQuery(searchTerm)
+            // gjør sånn at det må være mer enn 3 tegn/bokstaver i feltet før den søker
         }
     }
     const handleInputChange = (e) => {

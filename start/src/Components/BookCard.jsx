@@ -1,100 +1,60 @@
-// import React from "react"
+import React from "react"
 
-// const BookCard = ({book}) => {
-//     const handleAmazonLink = () =>{
+const BookCard = ({ book }) => {
+  const handleAmazonLink = () => {
+    // Noen bøker i resultatene har flere id'er i id_amazon og noen av disse kan være en tom streng.
+    // Jeg har valgt å bare hente ut den første verdien i arrayet for id_amazon som ikke er en tom string.
+    // Bruker find() for å finne den første verdien i id_amazon-arrayen som ikke er en tom streng (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find)
+    const firstValidId = book.id_amazon.find((id) => id.trim() !== "")
 
-//         const firstValidId = book.id_amazon.find((id) => id.trim() !== "")
-    
-//         if (firstValidId) {
-//             window.open(`https://www.amazon.com/s?k=${firstValidId}`, "_blank")
-//         }
-//     }
-
-//         return (
-//             <article>
-//                 <div>
-//                     <h3>{book.title}</h3>
-//                     <p>
-//                         Forfatter: {book.author_name ? book.author_name.join(", ") : "Ukjent"}
-//                     </p>
-//                     <p>
-//                         Første publiseringsår:{" "}: {book.first_publish_year ? book.first_publish_year.join(", ") : "Ukjent"}
-//                     </p>
-//                     <p>
-//                         Generel rating: {" "} {book.ratings_average ? book.ratings_average.join(", ") : "Ukjent"}
-//                     </p>
-//                 </div>
-
-//                 <div className="imageContainer">
-//                     {book.cover_i ?(
-//                         <img src={`https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`} alt="Cover"
-//                         />
-//                     ): (
-//                         <span>Ingen Cover</span>
-//                     )}
-//                 </div>
-
-//                 {book.id_amazon && book.id_amazon.some((id) => id.trim() !== "")? (
-//                     <button onClick={handleAmazonLink}>Gå til Amazon</button>
-//                 ) : (
-//                     <span>Ingen Amazon-ID funnet</span>
-//                 )}
-//             </article>
-//         )
-// }
-
-// export default BookCard
-import React, { useState, useEffect } from "react"
-import SearchResults from "./SearchResults"
-
-
-export default function Layout ({children})  {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [searchResultsState, setSearchResultsState] = useState([])
-  const [query, setQuery] = useState("James Bond")
-
-  const fetchData = async (query) => {
-    try {
-      const response = await fetch(`https://openlibrary.org/search.json?title=${query}`)
-      const data = await response.json()
-      setSearchResultsState(data.docs)
-    } catch (error) {
-      console.error("Det har skjedd en feil:", error)
+    // Åpne lenken hvis en gyldig ID ble funnet
+    if (firstValidId) {
+      window.open(`https://www.amazon.com/s?k=${firstValidId}`, "_blank")
     }
-  }
-
-  useEffect(() => {
-    if (query) {
-      fetchData(query)
-    }
-  }, [query])
-
-
-  const handleSearch = () => {
-    if (searchTerm.length >= 3) {
-      setQuery(searchTerm)
-    }
-  }
-
-  const handleInputChange = (e) => {
-    setSearchTerm(e.target.value)
   }
 
   return (
-    <>
-      <header>
-        <h1>Book Search</h1>
-      </header>
-     <nav>
-      <input type="text" value={searchTerm} onChange={handleInputChange} placeholder="Skriv minst tre tegn" />
-        <button onClick={handleSearch}>Søk</button>
-        </nav>
-      <main>
-        <SearchResults searchResults={searchResultsState} />
-        {/* {children} */}
-      </main>
-    </>
+    <article>
+      <div>
+        {/* henter ut ider */}
+        <h3>{book.title}</h3>
+        <p>
+          Forfatter: {book.author_name ? book.author_name.join(", ") : "Ukjent"}
+        </p>
+        <p>
+          Første publiseringsår:{" "}
+          {book.first_publish_year ? book.first_publish_year : "Ukjent"}
+        </p>
+        <p>
+          Generell rating:{" "}
+          {book.ratings_average ? book.ratings_average : "Ukjent"}
+        </p>
+      </div>
+
+      <div className="imageContainer">
+        {book.cover_i ? (
+          // jeg henter ut cover-bildet til boka (dersom det finnes) ved å bruke id hentet fra response-dataen
+          // https://openlibrary.org/swagger/docs#/covers
+          <img
+            src={`https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`}
+            alt="Cover"
+            
+          />
+        ) : (
+          <span>Ingen omslag</span> 
+        )}
+       
+       </div>
+       
+    {book.id_amazon && book.id_amazon.some((id) => id.trim() !== "") ? (
+      <button onClick={handleAmazonLink}>Utfør Amazon.com-søk</button>
+    ) : (
+      <span>Ingen Amazon-ID funnet</span>
+    )}
+   
+  </article>
   )
 }
 
+export default BookCard
 
