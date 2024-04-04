@@ -1,0 +1,134 @@
+
+
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap');
+
+:root {
+    --redish: #b8a3a1c9;
+    --darkpurpleish: #898989;
+    --midnightish: #6a676a;
+    --purpleish: #5b565d;
+    --black: #000000;
+    --blackish: #2c2b2b;
+    --white: #FFFFFF;
+
+    --font: 'Rubik', sans-serif;
+    --rootsize: 20px;
+    --maxsize: 1200px;
+
+    background-color: var(--black);
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(4, 4fr);
+    grid-template-rows: repeat(4, 4fr);
+    gap: 20px;
+    padding: 20px;
+   
+}
+
+
+header {
+    background-color: var(--purpleish);
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+
+h1 {
+    font-family: var(--font);
+    font-weight: 700;
+    font-size: 50px;
+    margin: 0;
+}
+}
+
+nav {
+    text-align: center;
+    color: var(--black);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: var(--blackish);
+    padding: 20px;
+  
+    button {
+        color: var(--blackish);
+        padding: 5px 10px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: var(--darkpurpleish);
+        }
+    }
+    
+}
+
+main {
+    background-color: var(--darkpurpleish);
+    display: grid;
+    padding-bottom: 20px;
+}
+
+    article {
+        background-color: var(--blackish);
+        padding: 10px;
+        text-align: center;
+        color: var(--white);
+        display: grid;
+        grid-template-columns: repeat(2, 3fr);
+        grid-template-rows: repeat(1, 3fr);
+        gap: 20px;
+        grid-row-gap: 20px;
+        padding-bottom: 10px;
+        margin: 10px;
+        border: none;
+        border-radius: 10px;
+     
+
+        h3 {
+            font-size: 30px;
+            font-weight: 600;
+            
+        }
+
+        p {
+            font-weight: 400;
+            font-size: 20px;
+        }
+
+        .imageContainer {
+            display: flex;
+            grid-column: span 1;
+            grid-row: span 2;
+           
+
+            img {
+                max-height: 320px;
+                max-width: 250px;
+                margin: 0 auto;
+                margin-bottom: 10px;
+                
+            }
+        }
+
+
+         button {
+
+             color: var(--white);
+             background-color: var(--darkpurpleish);
+             border-width: 8px;
+             width: 300px;
+             height: 50px;
+             margin: 0 auto;
+             margin-bottom: 30px;
+       
+            
+
+            &:hover {
+                background-color: var(--blackish);
+            }
+            
+         }
+    }
+    
